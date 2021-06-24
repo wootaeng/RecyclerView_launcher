@@ -50,6 +50,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int pos) {
 
+                ResolveInfo checkedResolveInfo =
+                        (ResolveInfo)parent.getItemAtPosition(pos);
+                ActivityInfo clickedActivityInfo =
+                        checkedResolveInfo.activityInfo;
+
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                intent.setClassName(
+                        clickedActivityInfo.applicationInfo.packageName,
+                        clickedActivityInfo.name);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                        Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                startActivity(intent);
 
             }
 
