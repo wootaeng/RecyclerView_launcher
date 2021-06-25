@@ -49,12 +49,13 @@ public class MainActivity extends AppCompatActivity {
         adapter.setOnClickListener(new AppAdapter.OnItemClicklistener() {
             @Override
             public void onItemClick(View v, int pos) {
-
+                //아이템 클릭스 앱 정보 확인
                 ResolveInfo checkedResolveInfo =
-                        (ResolveInfo)parent.getItemAtPosition(pos);
+                        (ResolveInfo) list.get(pos);
+                //확인한 정보를 액티비티에 담기?
                 ActivityInfo clickedActivityInfo =
                         checkedResolveInfo.activityInfo;
-
+                //새 액티비티로 보내기 앱실행
                 Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_LAUNCHER);
                 intent.setClassName(
