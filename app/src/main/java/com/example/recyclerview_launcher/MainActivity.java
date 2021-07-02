@@ -1,6 +1,7 @@
 package com.example.recyclerview_launcher;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,18 +37,19 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_MAIN , null);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         List<ResolveInfo> list = pm.queryIntentActivities(intent,0);
-
-        recyclerView = (RecyclerView) findViewById(R.id.adapter);
+        //item 간격
+        ItemDecoration spaceDecoration = new ItemDecoration(60);
+        recyclerView = (RecyclerView)findViewById(R.id.adapter);
 
         //LinearLayout 형식으로 앱 정렬
         //LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
         //GridView  형식으로 앱 정렬
         //좌우이동
-        GridLayoutManager layoutManager = new GridLayoutManager(this,4,GridLayoutManager.HORIZONTAL,false);
+        GridLayoutManager layoutManager = new GridLayoutManager(this,2,GridLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(false);
-
+        //recyclerView.setHasFixedSize(false);
+        recyclerView.addItemDecoration(spaceDecoration);
         AppAdapter adapter = new AppAdapter(list,pm);
 
 
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.setOnClickListener(new AppAdapter.OnItemClicklistener() {
             @Override
             public void onItemClick(View v, int pos) {
-                //아이템 클릭스 앱 정보 확인
+                //아이템 클릭시 앱 정보 확인
                 ResolveInfo checkedResolveInfo =
                         (ResolveInfo) list.get(pos);
                 //확인한 정보를 액티비티에 담기?
