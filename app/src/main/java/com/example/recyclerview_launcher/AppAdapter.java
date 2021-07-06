@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +23,9 @@ import java.util.List;
 
 public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
     private static final String TAG = "AppAdapter";
+
+    private static final int itemCount = 4;
+
 
 
 
@@ -74,7 +78,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return 8;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -99,6 +103,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
             });
             title = (TextView) v.findViewById(R.id.title);
             img = (ImageView) v.findViewById(R.id.img);
+
         }
 
         public TextView getTextView() {

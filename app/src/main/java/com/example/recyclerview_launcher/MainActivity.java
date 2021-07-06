@@ -1,5 +1,6 @@
 package com.example.recyclerview_launcher;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -16,7 +17,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
 
     PackageManager pm;
     RecyclerView recyclerView;
+    List<ResolveInfo> list;
+    AppAdapter adapter;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +45,15 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(Intent.ACTION_MAIN , null);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        List<ResolveInfo> list = pm.queryIntentActivities(intent,0);
+        list = pm.queryIntentActivities(intent,0);
         //item 간격
         ItemDecoration spaceDecoration = new ItemDecoration(60);
         recyclerView = (RecyclerView)findViewById(R.id.adapter);
+
+
+
+
+
 
         //LinearLayout 형식으로 앱 정렬
         //LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -50,8 +64,10 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         //recyclerView.setHasFixedSize(false);
         recyclerView.addItemDecoration(spaceDecoration);
-        AppAdapter adapter = new AppAdapter(list,pm);
+        adapter = new AppAdapter(list,pm);
 
+
+       
 
         recyclerView.setAdapter(adapter);
         adapter.setOnClickListener(new AppAdapter.OnItemClicklistener() {
@@ -77,6 +93,8 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+
+
         
 
 //        for (ApplicationInfo packageInfo : packages) {
@@ -96,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
 //        ((RecyclerView)findViewById(R.id.adapter)).setLayoutManager(new LinearLayoutManager(this));
 
     }
+
 
 
 

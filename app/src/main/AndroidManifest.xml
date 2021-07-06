@@ -11,6 +11,7 @@
         android:theme="@style/Theme.RecyclerView_launcher"
         android:appComponentFactory="whateverString"
 
+
         tools:replace="android:appComponentFactory">
         <!-- screenOrientation 으로 화면 고정 landscape 가로 portrait -->
         <activity android:name=".MainActivity"
