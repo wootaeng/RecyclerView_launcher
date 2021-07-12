@@ -15,10 +15,14 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -32,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     List<ResolveInfo> list;
     AppAdapter adapter;
+    Button btn_menu;
+    GridLayoutManager layoutManager;
 
 
 
@@ -60,14 +66,11 @@ public class MainActivity extends AppCompatActivity {
 
         //GridView  형식으로 앱 정렬
         //좌우이동
-        GridLayoutManager layoutManager = new GridLayoutManager(this,2,GridLayoutManager.HORIZONTAL,false);
+        layoutManager = new GridLayoutManager(this,2,GridLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(layoutManager);
-        //recyclerView.setHasFixedSize(false);
+        recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(spaceDecoration);
         adapter = new AppAdapter(list,pm);
-
-
-       
 
         recyclerView.setAdapter(adapter);
         adapter.setOnClickListener(new AppAdapter.OnItemClicklistener() {
@@ -93,25 +96,36 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        btn_menu =(Button)findViewById(R.id.Button_menu);
+        btn_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final PopupMenu popupMenu = new PopupMenu(getApplicationContext(), view);
+                getMenuInflater().inflate(R.menu.popup, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuitem) {
 
+                        if (menuitem.getItemId() == R.id.action_menu1){
+                            layoutManager = new GridLayoutManager(MainActivity.this,1,GridLayoutManager.HORIZONTAL,false);
+                            recyclerView.setLayoutManager(layoutManager);
+                            recyclerView.setHasFixedSize(true);
+                        } else if (menuitem.getItemId() == R.id.action_menu2){
+                            layoutManager = new GridLayoutManager(MainActivity.this,2,GridLayoutManager.HORIZONTAL,false);
+                            recyclerView.setLayoutManager(layoutManager);
+                            recyclerView.setHasFixedSize(true);
+                        } else if (menuitem.getItemId() == R.id.action_menu3){
+                            layoutManager = new GridLayoutManager(MainActivity.this,3,GridLayoutManager.HORIZONTAL,false);
+                            recyclerView.setLayoutManager(layoutManager);
+                            recyclerView.setHasFixedSize(true);
+                        }
 
-        
-
-//        for (ApplicationInfo packageInfo : packages) {
-//            Log.d("ApplicationInfo", "Installed package :" + packageInfo.packageName);
-//            Log.d("ApplicationInfo", "Source dir : " + packageInfo.sourceDir);
-//            Log.d("ApplicationInfo", "Launch Activity :" + pm.getLaunchIntentForPackage(packageInfo.packageName));
-//
-//            // 화면에 설치된 앱 정보만 가져온다
-//            if(packageInfo.sourceDir.contains("/data/app/")){
-//                list.add(packageInfo);
-//            }
-//        }
-
-
-//        ((RecyclerView)findViewById(R.id.adapter)).setAdapter(new AppAdapter(pm,list));
-//        ((RecyclerView)findViewById(R.id.adapter)).setHasFixedSize(true);
-//        ((RecyclerView)findViewById(R.id.adapter)).setLayoutManager(new LinearLayoutManager(this));
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
 
     }
 

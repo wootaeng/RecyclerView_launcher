@@ -24,7 +24,6 @@ import java.util.List;
 public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
     private static final String TAG = "AppAdapter";
 
-    private static final int itemCount = 4;
 
 
 
@@ -78,7 +77,8 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return 8;
+        return
+        list.size(); //전체 목록
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
