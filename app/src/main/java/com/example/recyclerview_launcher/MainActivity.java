@@ -30,14 +30,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TiltScrollController.ScrollListener {
 
-    PackageManager pm;
-    RecyclerView recyclerView;
-    List<ResolveInfo> list;
-    AppAdapter adapter;
-    Button btn_menu;
-    GridLayoutManager layoutManager;
+    private PackageManager pm;
+    private RecyclerView recyclerView;
+    private List<ResolveInfo> list;
+    private AppAdapter adapter;
+    private Button btn_menu;
+    private GridLayoutManager layoutManager;
+    private TiltScrollController mTiltScrollController;
+    private ScrollZoomLayoutManager scrollZoomLayoutManager;
+
+
+
+
 
 
 
@@ -110,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                             layoutManager = new GridLayoutManager(MainActivity.this,1,GridLayoutManager.HORIZONTAL,false);
                             recyclerView.setLayoutManager(layoutManager);
                             recyclerView.setHasFixedSize(true);
+                            mTiltScrollController = new TiltScrollController(getApplicationContext(), MainActivity.this::onTilt);
                         } else if (menuitem.getItemId() == R.id.action_menu2){
                             layoutManager = new GridLayoutManager(MainActivity.this,2,GridLayoutManager.HORIZONTAL,false);
                             recyclerView.setLayoutManager(layoutManager);
@@ -130,6 +137,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
+    @Override
+    public void onTilt(int x, int y, float delta) {
+        //        recyclerView.smoothScrollBy(x, y);
+        if (Math.abs(delta) > 0.6) {
+            recyclerView.smoothScrollBy(x * (scrollZoomLayoutManager.getEachItemWidth()), 0);
+//            smoothScrollBy(x * (layoutManager.getEachItemWidth()), 0);
+        } else
+            recyclerView.smoothScrollBy(x * (scrollZoomLayoutManager.getEachItemWidth() / 6), 0);
+//            smoothScrollBy(x * (layoutManager.getEachItemWidth() / 6), 0)
+    }
 }
