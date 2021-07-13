@@ -3,13 +3,13 @@
 
     <item
         android:id="@+id/action_menu1"
-        android:title="1번" />
+        android:title="하나" />
 
     <item
         android:id="@+id/action_menu2"
-        android:title="2번" />
+        android:title="둘" />
     <item
         android:id="@+id/action_menu3"
-        android:title="3번" />
+        android:title="셋" />
 
 </menu>

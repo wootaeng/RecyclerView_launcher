@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.recyclerview_launcher">
+    package="com.peng.plant.wattstore">
+
+
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -14,7 +17,7 @@
 
         tools:replace="android:appComponentFactory">
         <!-- screenOrientation 으로 화면 고정 landscape 가로 portrait -->
-        <activity android:name=".MainActivity"
+        <activity android:name="com.peng.plant.wattstore.MainActivity"
 
             android:screenOrientation="landscape">
 

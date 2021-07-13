@@ -1,4 +1,4 @@
-package com.example.recyclerview_launcher;
+package com.peng.wattstore;
 
 import org.junit.Test;
 
