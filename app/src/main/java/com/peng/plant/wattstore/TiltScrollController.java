@@ -1,4 +1,4 @@
-package com.example.recyclerview_launcher;
+package com.peng.plant.wattstore;
 
 import android.content.Context;
 import android.hardware.Sensor;

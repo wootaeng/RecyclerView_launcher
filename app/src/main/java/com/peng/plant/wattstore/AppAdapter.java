@@ -1,24 +1,23 @@
-package com.example.recyclerview_launcher;
+package com.peng.plant.wattstore;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.peng.recyclerview_launcher.R;
+
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
@@ -29,13 +28,18 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
 
 
 
-    PackageManager pm;
+//    PackageManager pm;
 
-    List<ResolveInfo> list;
+    private Context context;
+    private ArrayList<AppData> list;
+    private PowerClientObserver observer;
 
-    public AppAdapter(List<ResolveInfo> list, PackageManager pm) {
+
+
+    public AppAdapter(Context context, ArrayList<AppData> list, PowerClientObserver observer) {
+        this.context = context;
         this.list = list;
-        this.pm = pm;
+        this.observer = observer;
 
 
 
@@ -67,8 +71,11 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.getTextView().setText(list.get(position).loadLabel(pm));
-        holder.getImageView().setImageDrawable(list.get(position).loadIcon(pm));
+//        holder.getTextView().setText(list.get(position).loadLabel(pm));
+//        holder.getImageView().setImageDrawable(list.get(position).loadIcon(pm));
+        AppData data = list.get(position);
+
+
 
 
 
@@ -106,12 +113,14 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
 
         }
 
-        public TextView getTextView() {
-            return title;
-        }
-        public ImageView getImageView(){
-            return img;
-        }
+//        public TextView getTextView() {
+//            return title;
+//        }
+//        public ImageView getImageView(){
+//            return img;
+//        }
+
+
 
     }
 
