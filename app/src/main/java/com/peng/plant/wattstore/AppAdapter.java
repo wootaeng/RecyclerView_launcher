@@ -21,10 +21,6 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
 
 
 
-
-
-
-
     Context context;
 
     ArrayList<AppData> list;
@@ -32,8 +28,6 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
     public AppAdapter(ArrayList<AppData> list, Context context) {
         this.list = list;
         this.context = context;
-
-
 
     }
 
@@ -46,7 +40,6 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
     public void setOnClickListener(OnItemClicklistener listener){
         this.mListener = listener;
     }
-
 
 
 
@@ -64,8 +57,6 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         AppData data = list.get(position);
         holder.title.setText(data.appnamekor);
-
-
 
 
     }
@@ -102,12 +93,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
 
         }
 
-
-
     }
-
-
-
 
 
 }

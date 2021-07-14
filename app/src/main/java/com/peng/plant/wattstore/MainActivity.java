@@ -12,6 +12,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +27,8 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements TiltScrollController.ScrollListener {
+
+    private static final String TAG = "MainActivity";
 
 
     private RecyclerView recyclerView;
@@ -67,23 +70,8 @@ public class MainActivity extends AppCompatActivity implements TiltScrollControl
                     "\\\"sftp_user\\\":\\\"sftpuser01\\\",\\\"sftp_user_pw\\\":\\\"Powereng#2501\\\",\\\"sftp_port\\\":\\\"22\\\"," +
                     "\\\"sftp_root_folder\\\":\\\"watt\\\",\\\"sftp_url\\\":\\\"https://wattcloud.powertalk.kr/sftp/watt/\\\"}\"," +
                     "\"useonglass\":1,\"useonpc\":1,\"sortnum\":2},{\"appnamekor\":\"설정\",\"appnameeng\":\"Settings\",\"apppkgname\":\"com.android.settings\"," +
-                    "\"appversion\":\"10\",\"appdetailjson\":\"{\\\"\\\"}\",\"useonglass\":1,\"useonpc\":1,\"sortnum\":3}," +
-                    "{\"appnamekor\":\"파워톡\",\"appnameeng\":\"PowerTalk\",\"apppkgname\":\"com.peng.plant.facetalk\",\"appversion\":\"1.5.3\"," +
-                    "\"appdetailjson\":\"{\\\"googCpuOveruseDetection\\\":\\\"true\\\",\\\"serverUrl01\\\":\\\"https://watt.powertalk.kr:8353@1\\\"," +
-                    "\\\"serverUrl02\\\":\\\"tcp://106.10.33.94:8354\\\",\\\"serverUrl03\\\":\\\"coturn1\\\",\\\"resolution\\\":\\\"1280 x 720\\\"}\"," +
-                    "\"useonglass\":1,\"useonpc\":1,\"sortnum\":0},{\"appnamekor\":\"파워콜\",\"appnameeng\":\"PowerCall\",\"apppkgname\":\"com.peng.powercall\"," +
-                    "\"appversion\":\"1.2.16\",\"appdetailjson\":\"{\\\"\\\"}\",\"useonglass\":1,\"useonpc\":1,\"sortnum\":1}," +
-                    "{\"appnamekor\":\"파워메모\",\"appnameeng\":\"PowerMemo\",\"apppkgname\":\"com.peng.power.memo\",\"appversion\":\"1.0.27\"," +
-                    "\"appdetailjson\":\"{\\\"socket_url\\\":\\\"http://wattcloud.powertalk.kr:8351\\\",\\\"sftp_host\\\":\\\"106.10.33.94\\\"," +
-                    "\\\"sftp_user\\\":\\\"sftpuser01\\\",\\\"sftp_user_pw\\\":\\\"Powereng#2501\\\",\\\"sftp_port\\\":\\\"22\\\",\\\"sftp_root_folder\\\":\\\"watt\\\"," +
-                    "\\\"sftp_url\\\":\\\"https://wattcloud.powertalk.kr/sftp/watt/\\\"}\",\"useonglass\":1,\"useonpc\":1,\"sortnum\":2}," +
-                    "{\"appnamekor\":\"설정\",\"appnameeng\":\"Settings\",\"apppkgname\":\"com.android.settings\",\"appversion\":\"10\"," +
-                    "\"appdetailjson\":\"{\\\"\\\"}\",\"useonglass\":1,\"useonpc\":1,\"sortnum\":3}]";
-
-
-
-
-
+                    "\"appversion\":\"10\",\"appdetailjson\":\"{\\\"\\\"}\",\"useonglass\":1,\"useonpc\":1,\"sortnum\":3}" +
+                    "]";
 
 
 
@@ -108,12 +96,15 @@ public class MainActivity extends AppCompatActivity implements TiltScrollControl
 
         AppData[] items = gson.fromJson(tmp, AppData[].class);
 
+        Log.d(TAG, "item:json" + items);
+
         for(AppData item : items) {
             list.add(item);
         }
-
+        Log.d(TAG, "setData:" +list);
         adapter = new AppAdapter(list,getApplicationContext());
         recyclerView.setLayoutManager(new GridLayoutManager(this,2,GridLayoutManager.HORIZONTAL,false));
+        mTiltScrollController = new TiltScrollController(getApplicationContext(),this);
         recyclerView.setAdapter(adapter);
         adapter.setOnClickListener(new AppAdapter.OnItemClicklistener() {
             @Override
@@ -145,11 +136,12 @@ public class MainActivity extends AppCompatActivity implements TiltScrollControl
                             layoutManager = new GridLayoutManager(MainActivity.this,1,GridLayoutManager.HORIZONTAL,false);
                             recyclerView.setLayoutManager(layoutManager);
                             recyclerView.setHasFixedSize(true);
-                            mTiltScrollController = new TiltScrollController(getApplicationContext(), MainActivity.this::onTilt);
+                            onTilt1(210,0, 1);
                         } else if (menuitem.getItemId() == R.id.action_menu2){
                             layoutManager = new GridLayoutManager(MainActivity.this,2,GridLayoutManager.HORIZONTAL,false);
                             recyclerView.setLayoutManager(layoutManager);
                             recyclerView.setHasFixedSize(true);
+                            onTilt2(80, 0, (float) 0.5);
                         } else if (menuitem.getItemId() == R.id.action_menu3){
                             layoutManager = new GridLayoutManager(MainActivity.this,3,GridLayoutManager.HORIZONTAL,false);
                             recyclerView.setLayoutManager(layoutManager);
@@ -221,9 +213,21 @@ public class MainActivity extends AppCompatActivity implements TiltScrollControl
 
 
     @Override
-    public void onTilt(int x, int y, float delta) {
+    public void onTilt1(int x, int y, float delta) {
         //        recyclerView.smoothScrollBy(x, y);
-        if (Math.abs(delta) > 0.6) {
+        if (Math.abs(delta) >= 1) {
+            recyclerView.smoothScrollBy(x , 0);
+//            smoothScrollBy(x * (layoutManager.getEachItemWidth()), 0);
+        } else
+            recyclerView.smoothScrollBy(x , 0);
+//            smoothScrollBy(x * (layoutManager.getEachItemWidth() / 6), 0)
+    }
+
+
+    @Override
+    public void onTilt2(int x, int y, float delta) {
+        //        recyclerView.smoothScrollBy(x, y);
+        if (Math.abs(delta) > 0.5) {
             recyclerView.smoothScrollBy(x , 0);
 //            smoothScrollBy(x * (layoutManager.getEachItemWidth()), 0);
         } else

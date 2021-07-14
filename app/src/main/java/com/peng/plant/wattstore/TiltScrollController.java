@@ -129,13 +129,13 @@ public class TiltScrollController implements SensorEventListener {
         mOldX = newX;
 
         int move = 0;
-        if (abs(deltaX) > 0.1 && abs(deltaX) <= 0.2) {
+        if (abs(deltaX) > 0.5 && abs(deltaX) <= 0.2) {
             if (deltaX > 0) {
-                move = 1;
+                move = 80;
             } else {
-                move = -1;
+                move = -80;
             }
-        } else if (abs(deltaX) > 0.2 && abs(deltaX) <= 0.4) {
+        } /*else if (abs(deltaX) > 0.2 && abs(deltaX) <= 0.4) {
             if (deltaX > 0) {
                 move = 2;
             } else {
@@ -153,11 +153,11 @@ public class TiltScrollController implements SensorEventListener {
             } else {
                 move = -8;
             }
-        } else if (abs(deltaX) > 1 /*&& abs(deltaX) <= 1.5*/) {
+        } */ else if (abs(deltaX) >= 1 /*&& abs(deltaX) <= 1.5*/) {
             if (deltaX > 0) {
-                move = 10;
+                move = 210;
             } else {
-                move = -10;
+                move = -210;
             }
         }/* else if (abs(deltaX) > 1.4 && abs(deltaX) <= 2.0) {
             if (deltaX > 0) {
@@ -192,7 +192,8 @@ public class TiltScrollController implements SensorEventListener {
         }*/
 
         if (move != 0)
-            mListener.onTilt(move, 0, deltaX);
+            mListener.onTilt1(move, 0, deltaX);
+            mListener.onTilt2(move, 0, deltaX);
 //        mOldZ = newZ;
 //
 ////        Log.d("aaaaaaaaaaaa", "updateRotation: " +deltaZ);
@@ -250,6 +251,9 @@ public class TiltScrollController implements SensorEventListener {
          * @param x The distance to scroll on the X axis
          * @param y The distance to scroll on the Y axis
          */
-        void onTilt(int x, int y, float delta);
+        void onTilt1(int x, int y, float delta);
+
+
+        void onTilt2(int x, int y, float deltaX);
     }
 }
